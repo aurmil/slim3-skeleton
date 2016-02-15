@@ -1,0 +1,16 @@
+{% extends "layouts/main.twig" %}
+
+{% block bodyId %}not-found{% endblock %}
+{% block metaTitle %}404 not found{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Resource not found</h1>
+
+    <p>
+        Page does not exist.
+        <br><br>
+        <a href="{{ path_for('home')|e('html_attr') }}">Go to homepage</a>
+    </p>
+</div>
+{% endblock %}

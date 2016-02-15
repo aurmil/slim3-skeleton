@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js"{% if config.language_code is defined and config.language_code %} lang="{{ config.language_code|e('html_attr') }}"{% endif %}>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        {# page title #}
+
+        {% set title = block('metaTitle') %}
+
+        {% if config.metas.title is defined and config.metas.title %}
+            {% if title and config.metas.title_separator is defined and config.metas.title_separator %}
+                {% set title = title ~ config.metas.title_separator %}
+            {% endif %}
+
+            {% set title = title ~ config.metas.title %}
+        {% endif %}
+
+        <title>{{ title }}</title>
+
+        {# meta tags #}
+
+        {% for key, value in config.metas %}
+            {% if value and key not in ['title', 'title_separator'] %}
+        <meta name="{{ key|e('html_attr') }}" content="{{ value|e('html_attr') }}">
+            {% endif %}
+        {% endfor %}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="assets/css/main.css">
+    </head>
+    <body id="{% block bodyId %}{% endblock %}">
+        {% block content %}{% endblock %}
+
+        <script src="assets/js/main.js"></script>
+
+        {% if config.use_google_analytics is defined and config.use_google_analytics == true
+            and config.google_analytics_id is defined and config.google_analytics_id %}
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','{{ config.google_analytics_id|e('js') }}','auto');ga('send','pageview');
+        </script>
+        {% endif %}
+    </body>
+</html>

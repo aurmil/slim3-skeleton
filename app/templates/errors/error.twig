@@ -1,0 +1,16 @@
+{% extends "layouts/main.twig" %}
+
+{% block bodyId %}error{% endblock %}
+{% block metaTitle %}Error{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Error</h1>
+
+    <p>
+        An error occurred!
+        <br><br>
+        <a href="{{ path_for('home')|e('html_attr') }}">Go to homepage</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+# ######################################################################
+# # COMMON DEFAULTS                                                    #
+# ######################################################################
+
+# ----------------------------------------------------------------------
+# | PHP                                                                |
+# ----------------------------------------------------------------------
+
+PHP: &PHP
+    log_errors                  : true
+    display_errors              : false
+    display_startup_errors      : false
+
+    default_timezone            : 'Europe/Paris'
+
+    need_session                : false
+    session_cookie_secure       : false
+
+# ----------------------------------------------------------------------
+# | Slim                                                               |
+# ----------------------------------------------------------------------
+
+Slim: &Slim
+    displayErrorDetails         : false
+
+# ----------------------------------------------------------------------
+# | Monolog                                                            |
+# ----------------------------------------------------------------------
+
+Monolog: &Monolog
+    loggerName                  : 'Slim3'
+    StreamHandler: &StreamHandler
+        enable                  : true
+        logLevel                : DEBUG
+    NativeMailerHandler: &NativeMailerHandler
+        enable                  : false
+        logLevel                : ERROR
+        to                      : ''
+        subject                 : 'Error'
+        from                    : ''
+
+# ----------------------------------------------------------------------
+# | Twig                                                               |
+# ----------------------------------------------------------------------
+
+# http://twig.sensiolabs.org/doc/api.html
+
+Twig: &Twig
+    cache                       : true
+    auto_reload                 : true
+    strict_variables            : true
+
+# ----------------------------------------------------------------------
+# | Application                                                                |
+# ----------------------------------------------------------------------
+
+App: &App
+    language_code               : 'en'
+
+    metas:
+        title                   : 'Slim 3 Skeleton'
+        title_separator         : ' - '
+        description             : ""
+
+    google_analytics_id         : ''
+    use_google_analytics        : false
+
+# ######################################################################
+# # ENVIRONMENT SPECIFIC                                               #
+# ######################################################################
+
+# ----------------------------------------------------------------------
+# | Development                                                        |
+# ----------------------------------------------------------------------
+
+development:
+    PHP:
+        <<: *PHP
+        display_errors          : true
+        display_startup_errors  : true
+
+    Slim:
+        <<: *Slim
+        displayErrorDetails     : true
+
+    Monolog:
+        <<: *Monolog
+
+    Twig:
+        <<: *Twig
+
+    App:
+        <<: *App
+
+# ----------------------------------------------------------------------
+# | Production                                                         |
+# ----------------------------------------------------------------------
+
+production:
+    PHP:
+        <<: *PHP
+
+    Slim:
+        <<: *Slim
+
+    Monolog:
+        <<: *Monolog
+        StreamHandler:
+            <<: *StreamHandler
+            logLevel            : WARNING
+        NativeMailerHandler:
+            <<: *NativeMailerHandler
+            enable              : true
+
+    Twig:
+        <<: *Twig
+
+    App:
+        <<: *App
+        use_google_analytics    : true
