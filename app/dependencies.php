@@ -46,5 +46,7 @@ $container['renderer'] = function ($c) {
         $c->get('request')->getUri()
     ));
 
+    $twig['config'] = $c->get('settings')['App'];
+
     return $twig;
 };

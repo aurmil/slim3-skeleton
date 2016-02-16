@@ -26,8 +26,7 @@ $container['notFoundHandler'] = function ($c) {
     return function (Request $request, Response $response) use ($c) {
         return $c->get('renderer')->render(
             $response->withStatus(404),
-            'errors/not-found.twig',
-            ['config' => $c->get('settings')['App']]
+            'errors/not-found.twig'
         );
     };
 };

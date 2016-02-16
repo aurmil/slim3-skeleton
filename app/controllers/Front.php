@@ -25,7 +25,6 @@ class Front
 
     public function home(Request $request, Response $response)
     {
-        $viewData = ['config' => $this->appConfig];
-        return $this->renderer->render($response, 'front/home.twig', $viewData);
+        return $this->renderer->render($response, 'front/home.twig');
     }
 }

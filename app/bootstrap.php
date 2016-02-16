@@ -72,8 +72,7 @@ if (!$container->get('settings')['displayErrorDetails']) {
 
             return $c->get('renderer')->render(
                 $response->withStatus(500),
-                'errors/error.twig',
-                ['config' => $c->get('settings')['App']]
+                'errors/error.twig'
             );
         };
     };
