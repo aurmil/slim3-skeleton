@@ -6,4 +6,4 @@ if ('cli-server' === PHP_SAPI && is_file(__DIR__.$_SERVER['REQUEST_URI'])) {
     return false;
 }
 
-require __DIR__.'/../app/bootstrap.php';
+require __DIR__.'/../app/src/bootstrap.php';

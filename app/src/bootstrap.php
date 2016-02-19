@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 // ========== PATHS ==========
 
-define('ROOT_PATH',   dirname(__DIR__));
+define('ROOT_PATH',   dirname(dirname(__DIR__)));
 define('APP_PATH',    ROOT_PATH.'/app');
 define('VAR_PATH',    ROOT_PATH.'/var');
 
@@ -31,7 +31,7 @@ require ROOT_PATH.'/vendor/autoload.php';
 
 // ========== CONFIGURATION ==========
 
-$config = require APP_PATH.'/config.php';
+$config = require APP_PATH.'/src/config.php';
 
 // ========== PHP (from configuration) ==========
 
@@ -59,9 +59,9 @@ unset($config['PHP']);
 
 $app = new \Slim\App(['settings' => $config]);
 
-require APP_PATH.'/dependencies.php';
-require APP_PATH.'/middlewares.php';
-require APP_PATH.'/routes.php';
+require APP_PATH.'/src/dependencies.php';
+require APP_PATH.'/src/middlewares.php';
+require APP_PATH.'/src/routes.php';
 
 // Error handler
 $container = $app->getContainer();
