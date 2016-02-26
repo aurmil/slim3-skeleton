@@ -12,22 +12,29 @@ $container['logger'] = function ($c) {
     $logger = new Monolog\Logger($config['loggerName']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
 
+    $formatter = new Monolog\Formatter\LineFormatter;
+    $formatter->includeStacktraces();
+
     if (true === $config['StreamHandler']['enable']) {
-        $logger->pushHandler(new Monolog\Handler\StreamHandler(
+        $handler = new Monolog\Handler\StreamHandler(
             VAR_PATH.'/log/app-'.date('Y-m').'.log',
             $config['StreamHandler']['logLevel']
-        ));
+        );
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
     }
 
     if (true === $config['NativeMailerHandler']['enable']
         && '' != $config['NativeMailerHandler']['to']
     ) {
-        $logger->pushHandler(new Monolog\Handler\NativeMailerHandler(
+        $handler = new Monolog\Handler\NativeMailerHandler(
             $config['NativeMailerHandler']['to'],
             $config['NativeMailerHandler']['subject'],
             $config['NativeMailerHandler']['from'],
             $config['NativeMailerHandler']['logLevel']
-        ));
+        );
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
     }
 
     return $logger;
