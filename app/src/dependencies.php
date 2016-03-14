@@ -7,7 +7,7 @@ $container = $app->getContainer();
 // Logger
 
 $container['logger'] = function ($c) {
-    $config = $c->get('settings')['Monolog'];
+    $config = $c->settings['Monolog'];
 
     $logger = new Monolog\Logger($config['loggerName']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -43,17 +43,17 @@ $container['logger'] = function ($c) {
 // View renderer
 
 $container['renderer'] = function ($c) {
-    $config = $c->get('settings')['Twig'];
+    $config = $c->settings['Twig'];
     $path = $config['templatesPath'];
     unset($config['templatesPath']);
 
     $twig = new Slim\Views\Twig($path, $config);
     $twig->addExtension(new Slim\Views\TwigExtension(
-        $c->get('router'),
-        $c->get('request')->getUri()
+        $c->router,
+        $c->request->getUri()
     ));
 
-    $twig['config'] = $c->get('settings')['App'];
+    $twig['config'] = $c->settings['App'];
 
     return $twig;
 };

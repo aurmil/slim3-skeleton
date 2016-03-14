@@ -65,12 +65,12 @@ require APP_PATH.'/src/routes.php';
 
 // Error handler
 $container = $app->getContainer();
-if (!$container->get('settings')['displayErrorDetails']) {
+if (!$container->settings['displayErrorDetails']) {
     $container['errorHandler'] = function ($c) {
         return function (Request $request, Response $response, \Exception $exception) use ($c) {
-            $c->get('logger')->error($exception);
+            $c->logger->error($exception);
 
-            return $c->get('renderer')->render(
+            return $c->renderer->render(
                 $response->withStatus(500),
                 'errors/error.twig'
             );

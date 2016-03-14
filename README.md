@@ -38,10 +38,7 @@ General settings are merged with environment-specific settings. The latter ones 
 
 In __/app/src/bootstrap.php__, the whole configuration is in the __$config__ variable.
 
-In a controller action, only the __App__ section of configuration is available through __$this->appConfig__ (see controller _\_construct method).
-```php
-$tmp = $this->appConfig['my_custom_setting_key'];
-```
+Configuration is also available through the container in the __settings__ entry (so __$this->settings__ is accessible in routes).
 
 ### Access config in Twig template
 
