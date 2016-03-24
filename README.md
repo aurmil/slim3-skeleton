@@ -68,3 +68,7 @@ A page title is formed as follows:
 * if __App.metas.title__ is not empty:
     * if __App.metas.title_separator__ is not empty: add the separator
     * add the config title
+
+## License
+
+The MIT License (MIT). Please see [License File](https://github.com/aurmil/slim3-skeleton/blob/master/LICENSE.md) for more information.
