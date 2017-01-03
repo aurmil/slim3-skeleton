@@ -1,69 +1,71 @@
 <?php
 
-$yaml = APP_PATH.'/config.yml';
+$configFilePath = APP_PATH.'/config.yml';
 
-if (file_exists($yaml) && is_file($yaml) && is_readable($yaml)) {
-    $env = getenv('ENVIRONMENT') ?: 'development';
+if (!file_exists($configFilePath)
+    || !is_file($configFilePath)
+    || !is_readable($configFilePath)
+) {
+    throw new Exception('Configuration file not found.');
+}
 
-    $configCache = VAR_PATH."/cache/config/$env.json";
+$env = getenv('ENVIRONMENT') ?: 'development';
+$configCacheFilePath = VAR_PATH."/cache/config/$env.json";
+$config = false;
 
-    if (file_exists($configCache) && is_file($configCache)
-        && is_readable($configCache)
-        && filemtime($configCache) > filemtime($yaml)
-    ) {
-        $config = json_decode(file_get_contents($configCache), true);
-    } else {
-        $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents($yaml));
+if (file_exists($configCacheFilePath)
+    && is_file($configCacheFilePath)
+    && is_readable($configCacheFilePath)
+    && filemtime($configCacheFilePath) > filemtime($configFilePath)
+) {
+    $config = json_decode(file_get_contents($configCacheFilePath), true);
+}
 
-        if (isset($config[$env])) {
-            $config = $config[$env];
+if (!$config) {
+    $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents($configFilePath));
 
-            // Slim
+    if (!isset($config[$env])) {
+        throw new Exception("Environment $env not found in configuration file.");
+    }
 
-            $config = array_merge($config, $config['Slim']);
-            unset($config['Slim']);
+    $config = $config[$env];
 
-            // Logger
+    // Slim
 
-            if (isset($config['Monolog']['StreamHandler']['logLevel'])) {
-                $level = 'Monolog\Logger::'.$config['Monolog']['StreamHandler']['logLevel'];
+    $config = array_merge($config, $config['Slim']);
+    unset($config['Slim']);
 
-                if (defined($level)) {
-                    $config['Monolog']['StreamHandler']['logLevel'] = constant($level);
-                } else {
-                    throw new \Exception('StreamHandler log level is incorrect.');
-                }
+    // Monolog
+
+    $handlerNames = ['StreamHandler', 'NativeMailerHandler'];
+
+    foreach ($handlerNames as $handlerName) {
+        $handlerConfig = $config['Monolog'][$handlerName];
+
+        if (true === $handlerConfig['enable']
+            && isset($handlerConfig['logLevel'])
+        ) {
+            $level = 'Monolog\Logger::'.$handlerConfig['logLevel'];
+
+            if (!defined($level)) {
+                throw new Exception("$handlerName log level is incorrect.");
             }
 
-            if (true === $config['Monolog']['NativeMailerHandler']['enable']
-                && isset($config['Monolog']['NativeMailerHandler']['logLevel'])
-            ) {
-                $level = 'Monolog\Logger::'.$config['Monolog']['NativeMailerHandler']['logLevel'];
-
-                if (defined($level)) {
-                    $config['Monolog']['NativeMailerHandler']['logLevel'] = constant($level);
-                } else {
-                    throw new \Exception('NativeMailerHandler log level is incorrect.');
-                }
-            }
-
-            // View renderer
-
-            $config['Twig']['templatesPath'] = APP_PATH.'/templates';
-
-            if (true === $config['Twig']['cache']) {
-                $config['Twig']['cache'] = VAR_PATH.'/cache/twig';
-            }
-
-            // save config cache file
-
-            file_put_contents($configCache, json_encode($config));
-        } else {
-            throw new \Exception("Environment $env not found in configuration file.");
+            $config['Monolog'][$handlerName]['logLevel'] = constant($level);
         }
     }
-} else {
-    throw new \Exception('Configuration file not found.');
+
+    // Twig
+
+    $config['Twig']['templatesPath'] = APP_PATH.'/templates';
+
+    if (true === $config['Twig']['cache']) {
+        $config['Twig']['cache'] = VAR_PATH.'/cache/twig';
+    }
+
+    // save config cache file
+
+    file_put_contents($configCacheFilePath, json_encode($config));
 }
 
 return $config;

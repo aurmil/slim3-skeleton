@@ -1,18 +1,14 @@
 <?php
 
-// DIC configuration
-
-$container = $app->getContainer();
-
 // Logger
 
-$container['logger'] = function ($c) {
-    $config = $c->settings['Monolog'];
+$container['logger'] = function ($container) {
+    $config = $container->settings['Monolog'];
 
     $logger = new Monolog\Logger($config['loggerName']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
 
-    $formatter = new Monolog\Formatter\LineFormatter;
+    $formatter = new Monolog\Formatter\LineFormatter();
     $formatter->includeStacktraces();
 
     if (true === $config['StreamHandler']['enable']) {
@@ -42,18 +38,59 @@ $container['logger'] = function ($c) {
 
 // View renderer
 
-$container['renderer'] = function ($c) {
-    $config = $c->settings['Twig'];
+$container['view'] = function ($container) {
+    $config = $container->settings['Twig'];
+
     $path = $config['templatesPath'];
     unset($config['templatesPath']);
 
-    $twig = new Slim\Views\Twig($path, $config);
-    $twig->addExtension(new Slim\Views\TwigExtension(
-        $c->router,
-        $c->request->getUri()
+    $view = new Slim\Views\Twig($path, $config);
+
+    // Instantiate and add Slim specific extension
+    $basePath = $container->request->getUri()->getBasePath();
+    $basePath = rtrim(str_ireplace('index.php', '', $basePath), '/');
+    $view->addExtension(new Slim\Views\TwigExtension(
+        $container->router,
+        $basePath
     ));
 
-    $twig['config'] = $c->settings['App'];
+    // Slim Flash Messages Twig extension is added in middlewares.php
 
-    return $twig;
+    $view->addExtension(new App\TwigExtensions\CsrfToken(
+        $container->csrf
+    ));
+
+    if (true === $config['debug']) {
+        $view->addExtension(new Twig_Extension_Debug());
+    }
+
+    return $view;
+};
+
+// Flash messages
+
+$container['flash'] = function () {
+    return new Slim\Flash\Messages();
+};
+
+// CSRF
+
+$container['csrf'] = function ($container) {
+    $csrf = new Slim\Csrf\Guard();
+
+    $csrf->setFailureCallable(function (
+        Psr\Http\Message\RequestInterface $request,
+        Psr\Http\Message\ResponseInterface $response,
+        callable $next
+    ) use ($container) {
+        $request = $request->withAttribute('csrf_status', false);
+
+        return $next($request, $response);
+    });
+
+    if (true === $container->settings['CSRF']['enableTokenPersistence']) {
+        $csrf->setPersistentTokenMode(true);
+    }
+
+    return $csrf;
 };

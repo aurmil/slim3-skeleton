@@ -1,7 +1,10 @@
 {
     "name": "aurmil/slim3-skeleton",
     "description": "A Slim Framework 3 application skeleton",
+    "type": "project",
     "keywords": ["slimphp", "slim", "framework"],
+    "homepage": "https://github.com/aurmil/slim3-skeleton",
+    "license": "MIT",
     "authors": [
         {
             "name": "Aurélien Millet",
@@ -9,20 +12,24 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/aurmil/slim3-skeleton",
-    "type": "project",
-    "license": "MIT",
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
+        "akrabat/rka-slim-session-middleware": "^2.0",
+        "monolog/monolog": "^1.21",
         "roave/security-advisories": "dev-master",
-        "slim/slim": "^3.2",
-        "slim/twig-view": "^2.0",
-        "monolog/monolog": "^1.17",
-        "symfony/yaml": "^3.0"
+        "slim/csrf": "^0.8.1",
+        "slim/flash": "^0.2.0",
+        "slim/slim": "^3.5",
+        "slim/twig-view": "^2.1",
+        "symfony/yaml": "^3.1"
     },
     "autoload": {
         "psr-4": {
-            "App\\Controller\\": "app/src/controllers/"
+            "App\\": "app/src/"
         }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
     }
 }

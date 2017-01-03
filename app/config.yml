@@ -10,11 +10,21 @@ PHP: &PHP
     log_errors                  : true
     display_errors              : false
     display_startup_errors      : false
-
     default_timezone            : 'Europe/Paris'
 
-    need_session                : false
-    session_cookie_secure       : false
+# ----------------------------------------------------------------------
+# | Session (needed for Flash messages or CSRF protection)             |
+# ----------------------------------------------------------------------
+
+Session: &Session
+    enable                      : false
+    name                        : 'Slim3'
+    lifetime                    : 0
+    path                        : '/'
+    domain                      : ''
+    secure                      : false
+    httponly                    : true
+    cache_limiter               : 'nocache'
 
 # ----------------------------------------------------------------------
 # | Slim                                                               |
@@ -22,6 +32,13 @@ PHP: &PHP
 
 Slim: &Slim
     displayErrorDetails         : false
+
+# ----------------------------------------------------------------------
+# | Cross-Site Request Forgery                                         |
+# ----------------------------------------------------------------------
+
+CSRF: &CSRF
+    enableTokenPersistence      : false
 
 # ----------------------------------------------------------------------
 # | Monolog                                                            |
@@ -46,6 +63,7 @@ Monolog: &Monolog
 # http://twig.sensiolabs.org/doc/api.html
 
 Twig: &Twig
+    debug                       : false
     cache                       : true
     auto_reload                 : true
     strict_variables            : true
@@ -62,8 +80,8 @@ App: &App
         title_separator         : ' - '
         description             : ""
 
-    google_analytics_id         : ''
-    use_google_analytics        : false
+    # false or Google Analytics ID 'UA-XXXXX-Y'
+    google_analytics_id         : false
 
 # ######################################################################
 # # ENVIRONMENT SPECIFIC                                               #
@@ -79,15 +97,22 @@ development:
         display_errors          : true
         display_startup_errors  : true
 
+    Session:
+        <<: *Session
+
     Slim:
         <<: *Slim
         displayErrorDetails     : true
+
+    CSRF:
+        <<: *CSRF
 
     Monolog:
         <<: *Monolog
 
     Twig:
         <<: *Twig
+        debug                   : true
 
     App:
         <<: *App
@@ -100,8 +125,14 @@ production:
     PHP:
         <<: *PHP
 
+    Session:
+        <<: *Session
+
     Slim:
         <<: *Slim
+
+    CSRF:
+        <<: *CSRF
 
     Monolog:
         <<: *Monolog
@@ -117,4 +148,3 @@ production:
 
     App:
         <<: *App
-        use_google_analytics    : true
