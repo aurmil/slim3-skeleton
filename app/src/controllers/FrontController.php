@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class FrontController extends BaseController
+class FrontController extends Controller
 {
-    public function home(Request $request, Response $response)
+    public function home(RequestInterface $request, ResponseInterface $response)
     {
-        return $this->renderer->render($response, 'front/home.twig');
+        return $this->render($response, 'front/home.twig');
     }
 }
