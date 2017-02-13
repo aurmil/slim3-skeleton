@@ -25,8 +25,11 @@ class Controller
      * @param string $template
      * @param array $data
      */
-    public function render(ResponseInterface $response, $template, $data = [])
-    {
+    public function render(
+        ResponseInterface $response,
+        $template,
+        array $data = []
+    ) {
         $this->container->view->render($response, $template, $data);
     }
 
