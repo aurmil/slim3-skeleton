@@ -88,7 +88,7 @@ $container['csrf'] = function ($container) {
         return $next($request, $response);
     });
 
-    if (true === $container->settings['CSRF']['enableTokenPersistence']) {
+    if (true === $container->settings['Security']['enable_csrf_token_persistence']) {
         $csrf->setPersistentTokenMode(true);
     }
 

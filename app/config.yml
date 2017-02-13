@@ -34,11 +34,11 @@ Slim: &Slim
     displayErrorDetails         : false
 
 # ----------------------------------------------------------------------
-# | Cross-Site Request Forgery                                         |
+# | Security                                                           |
 # ----------------------------------------------------------------------
 
-CSRF: &CSRF
-    enableTokenPersistence      : false
+Security: &Security
+    enable_csrf_token_persistence: false
 
 # ----------------------------------------------------------------------
 # | Monolog                                                            |
@@ -104,8 +104,8 @@ development:
         <<: *Slim
         displayErrorDetails     : true
 
-    CSRF:
-        <<: *CSRF
+    Security:
+        <<: *Security
 
     Monolog:
         <<: *Monolog
@@ -131,8 +131,8 @@ production:
     Slim:
         <<: *Slim
 
-    CSRF:
-        <<: *CSRF
+    Security:
+        <<: *Security
 
     Monolog:
         <<: *Monolog
