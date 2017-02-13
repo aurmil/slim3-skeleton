@@ -31,7 +31,7 @@ Feel free to read the [Slim documentation](http://www.slimframework.com/docs/sta
 
 ## Configuration
 
-Application configuration is stored in __/app/config.yml__ which is divided into 2 main parts: general settings and environment-specific settings.
+Application configuration is stored in __/app/config/config.yml__ which is divided into 2 main parts: general settings and environment-specific settings.
 
 Environment settings are grouped within sections. A section = an environment. Section name = value of __ENVIRONMENT__ env variable (default = __development__).
 

@@ -1,6 +1,6 @@
 <?php
 
-$configFilePath = APP_PATH.'/config.yml';
+$configFilePath = APP_PATH.'/config/config.yml';
 
 if (!file_exists($configFilePath)
     || !is_file($configFilePath)
