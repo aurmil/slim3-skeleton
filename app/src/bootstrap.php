@@ -46,7 +46,7 @@ require 'middlewares.php';
 require 'routes.php';
 
 // Pass datas to view
-$container->view['config'] = $container->settings['App'];
+$container->view['config'] = array_merge($config['App'], $config['Security']);
 
 // Error handler
 if (!$container->settings['displayErrorDetails']) {

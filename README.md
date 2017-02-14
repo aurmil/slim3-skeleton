@@ -45,7 +45,7 @@ Configuration is also available through the container in the __settings__ entry 
 
 ### Access config in Twig template
 
-Only the __App__ section of configuration is in the __config__ variable.
+Only the __App__ and __Security__ sections of configuration are in the __config__ variable.
 
 ```twig
 {{ config.my_custom_setting_key }}
