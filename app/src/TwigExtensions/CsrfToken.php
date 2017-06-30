@@ -1,36 +1,33 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\TwigExtensions;
 
-class CsrfToken extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class CsrfToken extends \Twig_Extension
+implements \Twig_Extension_GlobalsInterface
 {
     /**
      * @var \Slim\Csrf\Guard
      */
     private $csrf;
 
-    /**
-     * @param \Slim\Csrf\Guard $csrf
-     */
     public function __construct(\Slim\Csrf\Guard $csrf)
     {
         $this->csrf = $csrf;
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('csrf', [$this, 'getHtml'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction(
+                'csrf',
+                [$this, 'getHtml'],
+                ['is_safe' => ['html']]
+            ),
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getHtml()
+    public function getHtml(): string
     {
         $token = $this->getGlobals()['csrf_token'];
 
@@ -40,10 +37,7 @@ class CsrfToken extends \Twig_Extension implements \Twig_Extension_GlobalsInterf
 EOT;
     }
 
-    /**
-     * @return array
-     */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'csrf_token' => [

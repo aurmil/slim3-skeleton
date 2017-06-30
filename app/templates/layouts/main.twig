@@ -5,7 +5,11 @@
 
         {# page title #}
 
-        {% set title = block('metaTitle') %}
+        {% set title = '' %}
+
+        {% if block('metaTitle') is defined %}
+            {% set title = block('metaTitle') %}
+        {% endif %}
 
         {% if config.metas.title is defined and config.metas.title %}
             {% if title and config.metas.title_separator is defined and config.metas.title_separator %}

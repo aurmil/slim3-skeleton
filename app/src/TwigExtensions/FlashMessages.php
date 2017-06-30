@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\TwigExtensions;
 
@@ -9,18 +10,12 @@ class FlashMessages extends \Twig_Extension
      */
     private $flashMessages;
 
-    /**
-     * @param \Slim\Flash\Messages $flashMessages
-     */
     public function __construct(\Slim\Flash\Messages $flashMessages)
     {
         $this->flashMessages = $flashMessages;
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('flash', [$this, 'getMessages']),
@@ -28,13 +23,11 @@ class FlashMessages extends \Twig_Extension
     }
 
     /**
-     * @param string $key
-     *
      * @return mixed
      */
-    public function getMessages($key = null)
+    public function getMessages(string $key = '')
     {
-        if (null !== $key) {
+        if ('' !== $key) {
             $message = $this->flashMessages->getMessage($key);
 
             if (is_array($message) && 1 === count($message)) {
