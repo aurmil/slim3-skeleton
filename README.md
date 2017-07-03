@@ -3,7 +3,7 @@
 ## What's included?
 
 * [Slim v3](https://www.slimframework.com/)
-* [Slim Twig-View + Twig v1](https://github.com/slimphp/Twig-View)
+* [Slim Twig-View + Twig v2](https://github.com/slimphp/Twig-View)
 * [Slim Flash Messages](https://github.com/slimphp/Slim-Flash)
 * [Slim CSRF Protection](https://github.com/slimphp/Slim-Csrf)
 * [Akrabat Slim Session Middleware](https://github.com/akrabat/rka-slim-session-middleware)
@@ -12,7 +12,7 @@
 
 ## Installation
 
-Required: PHP 5.6 or higher and [Composer](https://getcomposer.org/doc/00-intro.md)
+Required: PHP 7 and [Composer](https://getcomposer.org/doc/00-intro.md)
 
 Run the following command, replacing __[your-project-name]__ with the name of the folder you want to create.
 ```sh
@@ -27,7 +27,7 @@ composer create-project aurmil/slim3-skeleton [your-project-name]
 
 This skeleton includes a __.htaccess__ file for Apache.
 
-Feel free to read the [Slim documentation](http://www.slimframework.com/docs/start/web-servers.html) if your prefer to use another Web server like nginx.
+Feel free to read the [Slim documentation about Web servers](http://www.slimframework.com/docs/start/web-servers.html).
 
 ## Configuration
 
