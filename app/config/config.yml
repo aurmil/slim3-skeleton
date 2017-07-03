@@ -69,6 +69,23 @@ Twig: &Twig
     strict_variables            : true
 
 # ----------------------------------------------------------------------
+# | Swift Mailer                                                       |
+# ----------------------------------------------------------------------
+
+# http://swiftmailer.org/docs/sending.html
+
+SwiftMailer: &SwiftMailer
+    # smtp, sendmail, false
+    transport                   : smtp
+    auth_mode                   : ''
+    username                    : ''
+    password                    : ''
+    host                        : ''
+    port                        : ''
+    encryption                  : ''
+    command                     : null
+
+# ----------------------------------------------------------------------
 # | Application                                                        |
 # ----------------------------------------------------------------------
 
@@ -114,6 +131,9 @@ development:
         <<: *Twig
         debug                   : true
 
+    SwiftMailer:
+        <<: *SwiftMailer
+
     App:
         <<: *App
 
@@ -145,6 +165,9 @@ production:
 
     Twig:
         <<: *Twig
+
+    SwiftMailer:
+        <<: *SwiftMailer
 
     App:
         <<: *App

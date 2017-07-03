@@ -21,6 +21,7 @@
         "slim/flash": "^0.2.0",
         "slim/slim": "^3.5",
         "slim/twig-view": "^2.2",
+        "swiftmailer/swiftmailer": "^6.0",
         "symfony/yaml": "^3.1"
     },
     "autoload": {

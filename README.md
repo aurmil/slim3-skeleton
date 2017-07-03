@@ -8,6 +8,7 @@
 * [Slim CSRF Protection](https://github.com/slimphp/Slim-Csrf)
 * [Akrabat Slim Session Middleware](https://github.com/akrabat/rka-slim-session-middleware)
 * [Symfony Yaml Component v3](http://symfony.com/doc/current/components/yaml.html)
+* [Swift Mailer v6](http://swiftmailer.org/)
 * [Monolog v1](https://github.com/Seldaek/monolog)
 
 ## Installation
