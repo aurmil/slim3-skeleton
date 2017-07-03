@@ -1,5 +1,41 @@
 <?php
 
+// Mail sender
+
+$container['mailer'] = function ($container) {
+    $config = $container->settings['SwiftMailer'];
+    $transport = false;
+
+    if ('smtp' === $config['transport']) {
+        $transport = new \Swift_SmtpTransport();
+        $options = [
+            'host', 'port', 'encryption',
+            'auth_mode', 'username', 'password'
+        ];
+    } elseif ('sendmail' === $config['transport']) {
+        $transport = new \Swift_SendmailTransport();
+        $options = ['command'];
+    }
+
+    if ($transport) {
+        if (isset($options) && is_array($options) && !empty($options)) {
+            foreach ($options as $option) {
+                if (isset($config[$option]) && $config[$option]) {
+                    $methodName = str_replace('_', ' ', $option);
+                    $methodName = ucwords($methodName);
+                    $methodName = str_replace(' ', '', $methodName);
+                    $methodName = 'set' . $methodName;
+                    $transport->{$methodName}($config[$option]);
+                }
+            }
+        }
+
+        return new \Swift_Mailer($transport);
+    }
+
+    return false;
+};
+
 // Logger
 
 $container['logger'] = function ($container) {
@@ -11,23 +47,46 @@ $container['logger'] = function ($container) {
     $formatter = new Monolog\Formatter\LineFormatter();
     $formatter->includeStacktraces();
 
-    if (true === $config['StreamHandler']['enable']) {
+    $handler = 'StreamHandler';
+
+    if (true === $config[$handler]['enable']) {
         $handler = new Monolog\Handler\StreamHandler(
             VAR_PATH.'/log/app-'.date('Y-m').'.log',
-            $config['StreamHandler']['logLevel']
+            $config[$handler]['logLevel']
         );
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);
     }
 
-    if (true === $config['NativeMailerHandler']['enable']
-        && '' != $config['NativeMailerHandler']['to']
+    $handler = 'NativeMailerHandler';
+
+    if (true === $config[$handler]['enable']
+        && $config[$handler]['to']
     ) {
         $handler = new Monolog\Handler\NativeMailerHandler(
-            $config['NativeMailerHandler']['to'],
-            $config['NativeMailerHandler']['subject'],
-            $config['NativeMailerHandler']['from'],
-            $config['NativeMailerHandler']['logLevel']
+            $config[$handler]['to'],
+            $config[$handler]['subject'],
+            $config[$handler]['from'],
+            $config[$handler]['logLevel']
+        );
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
+    }
+
+    $handler = 'SwiftMailerHandler';
+
+    if (true === $config[$handler]['enable']
+        && $config[$handler]['to']
+        && $container->mailer instanceof \Swift_Mailer
+    ) {
+        $message = new \Swift_Message($config[$handler]['subject']);
+        $message->setFrom($config[$handler]['from'])
+            ->setTo($config[$handler]['to']);
+
+        $handler = new Monolog\Handler\SwiftMailerHandler(
+            $container->mailer,
+            $message,
+            $config[$handler]['logLevel']
         );
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);
@@ -93,40 +152,4 @@ $container['csrf'] = function ($container) {
     }
 
     return $csrf;
-};
-
-// Mail sender
-
-$container['mailer'] = function ($container) {
-    $config = $container->settings['SwiftMailer'];
-    $transport = false;
-
-    if ('smtp' === $config['transport']) {
-        $transport = new \Swift_SmtpTransport();
-        $options = [
-            'host', 'port', 'encryption',
-            'auth_mode', 'username', 'password'
-        ];
-    } elseif ('sendmail' === $config['transport']) {
-        $transport = new \Swift_SendmailTransport();
-        $options = ['command'];
-    }
-
-    if ($transport) {
-        if (isset($options) && is_array($options) && !empty($options)) {
-            foreach ($options as $option) {
-                if (isset($config[$option]) && $config[$option]) {
-                    $methodName = str_replace('_', ' ', $option);
-                    $methodName = ucwords($methodName);
-                    $methodName = str_replace(' ', '', $methodName);
-                    $methodName = 'set' . $methodName;
-                    $transport->{$methodName}($config[$option]);
-                }
-            }
-        }
-
-        return new Swift_Mailer($transport);
-    }
-
-    return false;
 };

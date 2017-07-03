@@ -54,7 +54,13 @@ Monolog: &Monolog
         logLevel                : ERROR
         to                      : ''
         subject                 : 'Error'
-        from                    : ''
+        from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
+    SwiftMailerHandler: &SwiftMailerHandler
+        enable                  : false
+        logLevel                : ERROR
+        to                      : ''
+        subject                 : 'Error'
+        from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
 
 # ----------------------------------------------------------------------
 # | Twig                                                               |
@@ -159,8 +165,8 @@ production:
         StreamHandler:
             <<: *StreamHandler
             logLevel            : WARNING
-        NativeMailerHandler:
-            <<: *NativeMailerHandler
+        SwiftMailerHandler:
+            <<: *SwiftMailerHandler
             enable              : true
 
     Twig:

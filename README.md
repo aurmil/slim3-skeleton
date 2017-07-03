@@ -121,7 +121,7 @@ To get all messages:
 
 ## Application errors by email
 
-By configuring __Monolog.NativeMailerHandler__ section, you can enable or disable sending email with Monolog when an error occurs.
+By configuring __Monolog.NativeMailerHandler__ or __SwiftMailer__ + __Monolog.SwiftMailerHandler__ section(s), you can enable or disable sending email with Monolog when an error occurs.
 
 ## Meta tags
 
