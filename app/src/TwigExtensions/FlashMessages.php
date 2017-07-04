@@ -15,6 +15,9 @@ class FlashMessages extends \Twig_Extension
         $this->flashMessages = $flashMessages;
     }
 
+    /**
+     * @return Twig_SimpleFunction[]
+     */
     public function getFunctions(): array
     {
         return [

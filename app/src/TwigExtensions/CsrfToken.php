@@ -16,6 +16,9 @@ implements \Twig_Extension_GlobalsInterface
         $this->csrf = $csrf;
     }
 
+    /**
+     * @return Twig_SimpleFunction[]
+     */
     public function getFunctions(): array
     {
         return [
