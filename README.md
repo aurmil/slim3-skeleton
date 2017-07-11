@@ -119,6 +119,10 @@ To get all messages:
 {% set my_var = flash() %}
 ```
 
+## Emails
+
+By configuring __SwiftMailer__ section in configuration file, you can use "mailer" entry from container as Swift_Mailer object in your code.
+
 ## Application errors by email
 
 By configuring __Monolog.NativeMailerHandler__ or __SwiftMailer__ + __Monolog.SwiftMailerHandler__ section(s), you can enable or disable sending email with Monolog when an error occurs.
