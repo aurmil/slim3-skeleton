@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace App\TwigExtensions;
 
-class CsrfToken extends \Twig_Extension
-implements \Twig_Extension_GlobalsInterface
+class CsrfToken extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     /**
      * @var \Slim\Csrf\Guard

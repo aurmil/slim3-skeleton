@@ -3,9 +3,9 @@
 // ========== PATHS ==========
 
 define('ROOT_PATH', dirname(dirname(__DIR__)));
-define('APP_PATH',  ROOT_PATH.'/app');
-define('VAR_PATH',  ROOT_PATH.'/var');
-define('WWW_PATH',  ROOT_PATH.'/public');
+define('APP_PATH', ROOT_PATH.'/app');
+define('VAR_PATH', ROOT_PATH.'/var');
+define('WWW_PATH', ROOT_PATH.'/public');
 
 // ========== PHP (static) ==========
 
@@ -30,9 +30,9 @@ $config = require 'config.php';
 date_default_timezone_set($config['PHP']['default_timezone']);
 
 // errors
-ini_set('display_errors',         $config['PHP']['display_errors']);
+ini_set('display_errors', $config['PHP']['display_errors']);
 ini_set('display_startup_errors', $config['PHP']['display_startup_errors']);
-ini_set('log_errors',             $config['PHP']['log_errors']);
+ini_set('log_errors', $config['PHP']['log_errors']);
 
 unset($config['PHP']);
 
