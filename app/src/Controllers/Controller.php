@@ -10,7 +10,7 @@ class Controller
     /**
      * @var Container
      */
-    private $container;
+    protected $container;
 
     /**
      * @param Container $container
