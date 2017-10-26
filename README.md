@@ -32,7 +32,7 @@ Feel free to read the [Slim documentation about Web servers](http://www.slimfram
 
 ## Configuration
 
-Application configuration is stored in __/app/config/config.yml__ which is divided into 2 main parts: general settings and environment-specific settings.
+Application configuration is stored in __/config/config.yml__ which is divided into 2 main parts: general settings and environment-specific settings.
 
 Environment settings are grouped within sections. A section = an environment. Section name = value of __ENVIRONMENT__ env variable (default = __development__).
 
@@ -40,7 +40,7 @@ General settings are merged with environment-specific settings. The latter ones 
 
 ### Access config in PHP code
 
-In __/app/src/bootstrap.php__, the whole configuration is in the __$config__ variable.
+In __/src/bootstrap.php__, the whole configuration is in the __$config__ variable.
 
 Configuration is also available through the container in the __settings__ entry (so __$this->settings__ is accessible in routes/controllers).
 

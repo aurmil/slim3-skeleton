@@ -1,6 +1,6 @@
 <?php
 
-$configFilePath = APP_PATH.'/config/config.yml';
+$configFilePath = ROOT_PATH.'/config/config.yml';
 
 if (!file_exists($configFilePath)
     || !is_file($configFilePath)
@@ -57,7 +57,7 @@ if (!$config) {
 
     // Twig
 
-    $config['Twig']['templatesPath'] = APP_PATH.'/templates';
+    $config['Twig']['templatesPath'] = ROOT_PATH.'/templates';
 
     if (true === $config['Twig']['cache']) {
         $config['Twig']['cache'] = VAR_PATH.'/cache/twig';
