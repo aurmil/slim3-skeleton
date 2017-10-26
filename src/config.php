@@ -1,6 +1,6 @@
 <?php
 
-$configFilePath = ROOT_PATH.'/config/config.yml';
+$configFilePath = ROOT_PATH . '/config/config.yml';
 
 if (!file_exists($configFilePath)
     || !is_file($configFilePath)
@@ -10,7 +10,7 @@ if (!file_exists($configFilePath)
 }
 
 $env = getenv('ENVIRONMENT') ?: 'development';
-$configCacheFilePath = VAR_PATH."/cache/config/$env.json";
+$configCacheFilePath = VAR_PATH . "/cache/config/$env.json";
 $config = false;
 
 if (file_exists($configCacheFilePath)
@@ -45,7 +45,7 @@ if (!$config) {
         if (true === $handlerConfig['enable']
             && isset($handlerConfig['logLevel'])
         ) {
-            $level = 'Monolog\Logger::'.$handlerConfig['logLevel'];
+            $level = 'Monolog\Logger::' . $handlerConfig['logLevel'];
 
             if (!defined($level)) {
                 throw new Exception("$handlerName log level is incorrect.");
@@ -57,10 +57,10 @@ if (!$config) {
 
     // Twig
 
-    $config['Twig']['templatesPath'] = ROOT_PATH.'/templates';
+    $config['Twig']['templatesPath'] = ROOT_PATH . '/templates';
 
     if (true === $config['Twig']['cache']) {
-        $config['Twig']['cache'] = VAR_PATH.'/cache/twig';
+        $config['Twig']['cache'] = VAR_PATH . '/cache/twig';
     }
 
     // save config cache file

@@ -51,7 +51,7 @@ $container['logger'] = function ($container) {
 
     if (true === $config[$handler]['enable']) {
         $handler = new Monolog\Handler\StreamHandler(
-            VAR_PATH.'/log/app-'.date('Y-m').'.log',
+            VAR_PATH . '/log/app-' . date('Y-m') . '.log',
             $config[$handler]['logLevel']
         );
         $handler->setFormatter($formatter);

@@ -3,21 +3,21 @@
 // ========== PATHS ==========
 
 define('ROOT_PATH', dirname(__DIR__));
-define('VAR_PATH', ROOT_PATH.'/var');
-define('WWW_PATH', ROOT_PATH.'/public');
+define('VAR_PATH', ROOT_PATH . '/var');
+define('WWW_PATH', ROOT_PATH . '/public');
 
 // ========== PHP (static) ==========
 
 // errors
 error_reporting(-1);
-ini_set('error_log', VAR_PATH.'/log/php-'.date('Y-m').'.log');
+ini_set('error_log', VAR_PATH . '/log/php-' . date('Y-m') . '.log');
 
 // charset
 ini_set('default_charset', 'UTF-8');
 
 // ========== COMPOSER ==========
 
-require ROOT_PATH.'/vendor/autoload.php';
+require ROOT_PATH . '/vendor/autoload.php';
 
 // ========== CONFIGURATION ==========
 
