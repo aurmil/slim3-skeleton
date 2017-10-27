@@ -26,14 +26,14 @@ $config = require 'config.php';
 // ========== PHP (from configuration) ==========
 
 // errors
-ini_set('display_errors', $config['PHP']['display_errors']);
-ini_set('display_startup_errors', $config['PHP']['display_startup_errors']);
-ini_set('log_errors', $config['PHP']['log_errors']);
+ini_set('display_errors', $config['php']['display_errors']);
+ini_set('display_startup_errors', $config['php']['display_startup_errors']);
+ini_set('log_errors', $config['php']['log_errors']);
 
 // time zone
-date_default_timezone_set($config['PHP']['default_timezone']);
+date_default_timezone_set($config['php']['default_timezone']);
 
-unset($config['PHP']);
+unset($config['php']);
 
 // ========== SLIM ==========
 
@@ -45,7 +45,7 @@ require 'middlewares.php';
 require 'routes.php';
 
 // Pass datas to view
-$container->view['config'] = array_merge($config['App'], $config['Security']);
+$container->view['config'] = array_merge($config['app'], $config['security']);
 
 // Error handler
 if (!$container->settings['displayErrorDetails']) {

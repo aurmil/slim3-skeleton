@@ -3,7 +3,7 @@
 // Mail sender
 
 $container['mailer'] = function ($container) {
-    $config = $container->settings['SwiftMailer'];
+    $config = $container->settings['swiftmailer'];
     $allowedTransportTypes = ['smtp', 'sendmail'];
 
     if (false === $config['enable']
@@ -34,7 +34,7 @@ $container['mailer'] = function ($container) {
 // Logger
 
 $container['logger'] = function ($container) {
-    $config = $container->settings['Monolog'];
+    $config = $container->settings['monolog'];
 
     $logger = new Monolog\Logger($config['logger_name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -93,7 +93,7 @@ $container['logger'] = function ($container) {
 // View renderer
 
 $container['view'] = function ($container) {
-    $config = $container->settings['Twig'];
+    $config = $container->settings['twig'];
 
     $path = $config['templatesPath'];
     unset($config['templatesPath']);
@@ -142,7 +142,7 @@ $container['csrf'] = function ($container) {
         return $next($request, $response);
     });
 
-    if (true === $container->settings['Security']['enable_csrf_token_persistence']) {
+    if (true === $container->settings['security']['enable_csrf_token_persistence']) {
         $csrf->setPersistentTokenMode(true);
     }
 

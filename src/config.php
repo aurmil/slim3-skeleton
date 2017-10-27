@@ -32,8 +32,8 @@ if (!$config) {
 
     // Slim
 
-    $slimConfig = $config['Slim'];
-    unset($config['Slim']);
+    $slimConfig = $config['slim'];
+    unset($config['slim']);
 
     if (isset($slimConfig['use_router_cache'])) {
         if (true === $slimConfig['use_router_cache']) {
@@ -53,7 +53,7 @@ if (!$config) {
 
     // Monolog
 
-    foreach ($config['Monolog'] as $handlerName => $handlerConfig) {
+    foreach ($config['monolog'] as $handlerName => $handlerConfig) {
         if (strlen($handlerName) - strlen('Handler') === strpos($handlerName, 'Handler')
             && is_array($handlerConfig)
             && isset($handlerConfig['enable'])
@@ -66,21 +66,21 @@ if (!$config) {
                 throw new Exception("$handlerName log level is incorrect.");
             }
 
-            $config['Monolog'][$handlerName]['level'] = constant($level);
+            $config['monolog'][$handlerName]['level'] = constant($level);
         }
     }
 
     // Twig
 
-    $config['Twig']['templatesPath'] = ROOT_PATH . '/templates';
-    $config['Twig']['cache'] = false;
+    $config['twig']['templatesPath'] = ROOT_PATH . '/templates';
+    $config['twig']['cache'] = false;
 
-    if (isset($config['Twig']['use_cache'])) {
-        if (true === $config['Twig']['use_cache']) {
-            $config['Twig']['cache'] = VAR_PATH . '/cache/twig';
+    if (isset($config['twig']['use_cache'])) {
+        if (true === $config['twig']['use_cache']) {
+            $config['twig']['cache'] = VAR_PATH . '/cache/twig';
         }
 
-        unset($config['Twig']['use_cache']);
+        unset($config['twig']['use_cache']);
     }
 
     // save config cache file

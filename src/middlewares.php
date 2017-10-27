@@ -1,6 +1,6 @@
 <?php
 
-if (true === $container->settings['Session']['enable']) {
+if (true === $container->settings['session']['enable']) {
     // session must be initialized (by another middleware)
     // before adding this Twig extension
     $app->add(function (
@@ -18,5 +18,5 @@ if (true === $container->settings['Session']['enable']) {
     });
 
     $app->add($container->csrf);
-    $app->add(new RKA\SessionMiddleware($container->settings['Session']));
+    $app->add(new RKA\SessionMiddleware($container->settings['session']));
 }

@@ -46,7 +46,7 @@ Configuration is also available through the container in the __settings__ entry 
 
 ### Access config in Twig template
 
-Only the __App__ and __Security__ sections of configuration are in the __config__ variable.
+Only the __app__ and __security__ sections of configuration are in the __config__ variable.
 
 ```twig
 {{ config.my_custom_setting_key }}
@@ -129,7 +129,7 @@ By configuring __Monolog.NativeMailerHandler__ or __SwiftMailer__ + __Monolog.Sw
 
 ## Meta tags
 
-Every __key: value__ pair you add under __App.metas__ will be output in HTML head section as a meta tag.
+Every __key: value__ pair you add under __app.metas__ will be output in HTML head section as a meta tag.
 
 ### Title
 
@@ -140,8 +140,8 @@ A page title is formed as follows:
 ```twig
 {% block metaTitle %}my custom page title{% endblock %}
 ```
-* if __App.metas.title__ is not empty:
-    * if __App.metas.title_separator__ is not empty: add the separator
+* if __app.metas.title__ is not empty:
+    * if __app.metas.title_separator__ is not empty: add the separator
     * add the config title
 
 ## License

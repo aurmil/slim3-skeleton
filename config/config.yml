@@ -6,7 +6,7 @@
 # | PHP                                                                |
 # ----------------------------------------------------------------------
 
-PHP: &PHP
+php: &php
     log_errors: true
     display_errors: false
     display_startup_errors: false
@@ -18,7 +18,7 @@ PHP: &PHP
 
 # https://github.com/akrabat/rka-slim-session-middleware/blob/master/RKA/SessionMiddleware.php
 
-Session: &Session
+session: &session
     enable: false
     name: 'Slim3Skeleton'
     lifetime: 0
@@ -34,7 +34,7 @@ Session: &Session
 
 # https://www.slimframework.com/docs/objects/application.html
 
-Slim: &Slim
+slim: &slim
     display_error_details: false
     use_router_cache: false
 
@@ -42,7 +42,7 @@ Slim: &Slim
 # | Security                                                           |
 # ----------------------------------------------------------------------
 
-Security: &Security
+security: &security
     enable_csrf_token_persistence: false
 
 # ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ Security: &Security
 
 # https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md
 
-Monolog: &Monolog
+monolog: &monolog
     logger_name: 'Slim3Skeleton'
 
     StreamHandler: &StreamHandler
@@ -78,7 +78,7 @@ Monolog: &Monolog
 
 # http://twig.sensiolabs.org/doc/api.html
 
-Twig: &Twig
+twig: &twig
     debug: false
     use_cache: true
     auto_reload: true
@@ -90,7 +90,7 @@ Twig: &Twig
 
 # http://swiftmailer.org/docs/sending.html
 
-SwiftMailer: &SwiftMailer
+swiftmailer: &swiftmailer
     enable: false
     # smtp or sendmail
     transport_type: 'smtp'
@@ -110,7 +110,7 @@ SwiftMailer: &SwiftMailer
 # | Application                                                        |
 # ----------------------------------------------------------------------
 
-App: &App
+app: &app
     language_code: 'en'
 
     metas:
@@ -130,54 +130,54 @@ App: &App
 # ----------------------------------------------------------------------
 
 development:
-    PHP:
-        <<: *PHP
+    php:
+        <<: *php
         display_errors: true
         display_startup_errors: true
 
-    Session:
-        <<: *Session
+    session:
+        <<: *session
 
-    Slim:
-        <<: *Slim
+    slim:
+        <<: *slim
         display_error_details: true
 
-    Security:
-        <<: *Security
+    security:
+        <<: *security
 
-    Monolog:
-        <<: *Monolog
+    monolog:
+        <<: *monolog
 
-    Twig:
-        <<: *Twig
+    twig:
+        <<: *twig
         debug: true
 
-    SwiftMailer:
-        <<: *SwiftMailer
+    swiftmailer:
+        <<: *swiftmailer
 
-    App:
-        <<: *App
+    app:
+        <<: *app
 
 # ----------------------------------------------------------------------
 # | Production                                                         |
 # ----------------------------------------------------------------------
 
 production:
-    PHP:
-        <<: *PHP
+    php:
+        <<: *php
 
-    Session:
-        <<: *Session
+    session:
+        <<: *session
 
-    Slim:
-        <<: *Slim
+    slim:
+        <<: *slim
         use_router_cache: true
 
-    Security:
-        <<: *Security
+    security:
+        <<: *security
 
-    Monolog:
-        <<: *Monolog
+    monolog:
+        <<: *monolog
         StreamHandler:
             <<: *StreamHandler
             level: WARNING
@@ -185,11 +185,11 @@ production:
             <<: *SwiftMailerHandler
             enable: true
 
-    Twig:
-        <<: *Twig
+    twig:
+        <<: *twig
 
-    SwiftMailer:
-        <<: *SwiftMailer
+    swiftmailer:
+        <<: *swiftmailer
 
-    App:
-        <<: *App
+    app:
+        <<: *app
