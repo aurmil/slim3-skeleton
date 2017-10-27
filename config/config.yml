@@ -17,6 +17,7 @@ PHP: &PHP
 # ----------------------------------------------------------------------
 
 # https://github.com/akrabat/rka-slim-session-middleware/blob/master/RKA/SessionMiddleware.php
+
 Session: &Session
     enable                      : false
     name                        : 'Slim3Skeleton'
