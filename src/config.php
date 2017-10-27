@@ -32,8 +32,24 @@ if (!$config) {
 
     // Slim
 
-    $config = array_merge($config, $config['Slim']);
+    $slimConfig = $config['Slim'];
     unset($config['Slim']);
+
+    if (isset($slimConfig['use_router_cache'])) {
+        if (true === $slimConfig['use_router_cache']) {
+            $slimConfig['router_cache_file'] = VAR_PATH . '/cache/fastroute.php';
+        }
+
+        unset($slimConfig['use_router_cache']);
+    }
+
+    foreach ($slimConfig as $k => $v) {
+        $camelK = str_replace('_', '', lcfirst(ucwords($k, '_')));
+        unset($slimConfig[$k]);
+        $slimConfig[$camelK] = $v;
+    }
+
+    $config = array_merge($config, $slimConfig);
 
     // Monolog
 

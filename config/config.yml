@@ -30,8 +30,11 @@ Session: &Session
 # | Slim                                                               |
 # ----------------------------------------------------------------------
 
+# https://www.slimframework.com/docs/objects/application.html
+
 Slim: &Slim
-    displayErrorDetails         : false
+    display_error_details       : false
+    use_router_cache         : false
 
 # ----------------------------------------------------------------------
 # | Security                                                           |
@@ -125,7 +128,7 @@ development:
 
     Slim:
         <<: *Slim
-        displayErrorDetails     : true
+        display_error_details   : true
 
     Security:
         <<: *Security
@@ -156,6 +159,7 @@ production:
 
     Slim:
         <<: *Slim
+        use_router_cache     : true
 
     Security:
         <<: *Security
