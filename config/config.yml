@@ -80,7 +80,7 @@ Monolog: &Monolog
 
 Twig: &Twig
     debug                       : false
-    cache                       : true
+    use_cache                   : true
     auto_reload                 : true
     strict_variables            : true
 

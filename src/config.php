@@ -74,9 +74,14 @@ if (!$config) {
     // Twig
 
     $config['Twig']['templatesPath'] = ROOT_PATH . '/templates';
+    $config['Twig']['cache'] = false;
 
-    if (true === $config['Twig']['cache']) {
-        $config['Twig']['cache'] = VAR_PATH . '/cache/twig';
+    if (isset($config['Twig']['use_cache'])) {
+        if (true === $config['Twig']['use_cache']) {
+            $config['Twig']['cache'] = VAR_PATH . '/cache/twig';
+        }
+
+        unset($config['Twig']['use_cache']);
     }
 
     // save config cache file
