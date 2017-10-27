@@ -8,9 +8,11 @@ if (true === $container->settings['Session']['enable']) {
         Psr\Http\Message\ResponseInterface $response,
         callable $next
     ) use ($container) {
-        $container->view->addExtension(new App\TwigExtensions\FlashMessages(
-            $container->flash
-        ));
+        if ($container->view instanceof Slim\Views\Twig) {
+            $container->view->addExtension(new App\TwigExtensions\FlashMessages(
+                $container->flash
+            ));
+        }
 
         return $next($request, $response);
     });
