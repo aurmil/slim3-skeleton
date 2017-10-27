@@ -7,10 +7,10 @@
 # ----------------------------------------------------------------------
 
 PHP: &PHP
-    log_errors                  : true
-    display_errors              : false
-    display_startup_errors      : false
-    default_timezone            : 'Europe/Paris'
+    log_errors: true
+    display_errors: false
+    display_startup_errors: false
+    default_timezone: 'Europe/Paris'
 
 # ----------------------------------------------------------------------
 # | Session (needed for Flash messages or CSRF protection)             |
@@ -19,14 +19,14 @@ PHP: &PHP
 # https://github.com/akrabat/rka-slim-session-middleware/blob/master/RKA/SessionMiddleware.php
 
 Session: &Session
-    enable                      : false
-    name                        : 'Slim3Skeleton'
-    lifetime                    : 0
-    path                        : '/'
-    domain                      : ''
-    secure                      : false
-    httponly                    : true
-    cache_limiter               : 'nocache'
+    enable: false
+    name: 'Slim3Skeleton'
+    lifetime: 0
+    path: '/'
+    domain: ''
+    secure: false
+    httponly: true
+    cache_limiter: 'nocache'
 
 # ----------------------------------------------------------------------
 # | Slim                                                               |
@@ -35,8 +35,8 @@ Session: &Session
 # https://www.slimframework.com/docs/objects/application.html
 
 Slim: &Slim
-    display_error_details       : false
-    use_router_cache         : false
+    display_error_details: false
+    use_router_cache: false
 
 # ----------------------------------------------------------------------
 # | Security                                                           |
@@ -52,25 +52,25 @@ Security: &Security
 # https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md
 
 Monolog: &Monolog
-    logger_name                  : 'Slim3Skeleton'
+    logger_name: 'Slim3Skeleton'
 
     StreamHandler: &StreamHandler
-        enable                  : true
-        level                : DEBUG
+        enable: true
+        level: DEBUG
 
     NativeMailerHandler: &NativeMailerHandler
-        enable                  : false
-        level                : ERROR
-        to                      : ''
-        subject                 : 'Slim 3 Skeleton Error'
-        from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
+        enable: false
+        level: ERROR
+        to: ''
+        subject: 'Slim 3 Skeleton Error'
+        from: { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
 
     SwiftMailerHandler: &SwiftMailerHandler
-        enable                  : false
-        level                : ERROR
-        to                      : ''
-        subject                 : 'Slim 3 Skeleton Error'
-        from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
+        enable: false
+        level: ERROR
+        to: ''
+        subject: 'Slim 3 Skeleton Error'
+        from: { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
 
 # ----------------------------------------------------------------------
 # | Twig                                                               |
@@ -79,10 +79,10 @@ Monolog: &Monolog
 # http://twig.sensiolabs.org/doc/api.html
 
 Twig: &Twig
-    debug                       : false
-    use_cache                   : true
-    auto_reload                 : true
-    strict_variables            : true
+    debug: false
+    use_cache: true
+    auto_reload: true
+    strict_variables: true
 
 # ----------------------------------------------------------------------
 # | Swift Mailer                                                       |
@@ -91,35 +91,35 @@ Twig: &Twig
 # http://swiftmailer.org/docs/sending.html
 
 SwiftMailer: &SwiftMailer
-    enable                      : false
+    enable: false
     # smtp or sendmail
-    transport_type              : 'smtp'
+    transport_type: 'smtp'
 
     smtp:
-        auth_mode                   : ''
-        username                    : ''
-        password                    : ''
-        host                        : ''
-        port                        : ''
-        encryption                  : ''
+        auth_mode: ''
+        username: ''
+        password: ''
+        host: ''
+        port: ''
+        encryption: ''
 
     sendmail:
-        command                     : ''
+        command: ''
 
 # ----------------------------------------------------------------------
 # | Application                                                        |
 # ----------------------------------------------------------------------
 
 App: &App
-    language_code               : 'en'
+    language_code: 'en'
 
     metas:
-        title                   : 'Slim 3 Skeleton'
-        title_separator         : ' - '
-        description             : ""
+        title: 'Slim 3 Skeleton'
+        title_separator: ' - '
+        description: ""
 
     # false or Google Analytics ID 'UA-XXXXX-Y'
-    google_analytics_id         : false
+    google_analytics_id: false
 
 # ######################################################################
 # # ENVIRONMENT SPECIFIC                                               #
@@ -132,15 +132,15 @@ App: &App
 development:
     PHP:
         <<: *PHP
-        display_errors          : true
-        display_startup_errors  : true
+        display_errors: true
+        display_startup_errors: true
 
     Session:
         <<: *Session
 
     Slim:
         <<: *Slim
-        display_error_details   : true
+        display_error_details: true
 
     Security:
         <<: *Security
@@ -150,7 +150,7 @@ development:
 
     Twig:
         <<: *Twig
-        debug                   : true
+        debug: true
 
     SwiftMailer:
         <<: *SwiftMailer
@@ -171,7 +171,7 @@ production:
 
     Slim:
         <<: *Slim
-        use_router_cache     : true
+        use_router_cache: true
 
     Security:
         <<: *Security
@@ -180,10 +180,10 @@ production:
         <<: *Monolog
         StreamHandler:
             <<: *StreamHandler
-            level            : WARNING
+            level: WARNING
         SwiftMailerHandler:
             <<: *SwiftMailerHandler
-            enable              : true
+            enable: true
 
     Twig:
         <<: *Twig
