@@ -91,15 +91,20 @@ Twig: &Twig
 # http://swiftmailer.org/docs/sending.html
 
 SwiftMailer: &SwiftMailer
-    # smtp, sendmail, false
-    transport                   : smtp
-    auth_mode                   : ''
-    username                    : ''
-    password                    : ''
-    host                        : ''
-    port                        : ''
-    encryption                  : ''
-    command                     : null
+    enable                      : false
+    # smtp or sendmail
+    transport_type              : 'smtp'
+
+    smtp:
+        auth_mode                   : ''
+        username                    : ''
+        password                    : ''
+        host                        : ''
+        port                        : ''
+        encryption                  : ''
+
+    sendmail:
+        command                     : ''
 
 # ----------------------------------------------------------------------
 # | Application                                                        |

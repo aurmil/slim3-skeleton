@@ -4,36 +4,31 @@
 
 $container['mailer'] = function ($container) {
     $config = $container->settings['SwiftMailer'];
-    $transport = false;
+    $allowedTransportTypes = ['smtp', 'sendmail'];
 
-    if ('smtp' === $config['transport']) {
+    if (false === $config['enable']
+        || !in_array($config['transport_type'], $allowedTransportTypes)
+    ) {
+        return false;
+    }
+
+    if ('smtp' === $config['transport_type']) {
         $transport = new \Swift_SmtpTransport();
-        $options = [
-            'host', 'port', 'encryption',
-            'auth_mode', 'username', 'password'
-        ];
-    } elseif ('sendmail' === $config['transport']) {
+    } elseif ('sendmail' === $config['transport_type']) {
         $transport = new \Swift_SendmailTransport();
-        $options = ['command'];
     }
 
-    if ($transport) {
-        if (isset($options) && is_array($options) && !empty($options)) {
-            foreach ($options as $option) {
-                if (isset($config[$option]) && $config[$option]) {
-                    $methodName = str_replace('_', ' ', $option);
-                    $methodName = ucwords($methodName);
-                    $methodName = str_replace(' ', '', $methodName);
-                    $methodName = 'set' . $methodName;
-                    $transport->{$methodName}($config[$option]);
-                }
-            }
+    if (isset($config[$config['transport_type']])
+        && is_array($config[$config['transport_type']])
+        && count($config[$config['transport_type']])
+    ) {
+        foreach ($config[$config['transport_type']] as $k => $v) {
+            $methodName = 'set' . str_replace('_', '', ucwords($k, '_'));
+            $transport->{$methodName}($v);
         }
-
-        return new \Swift_Mailer($transport);
     }
 
-    return false;
+    return new \Swift_Mailer($transport);
 };
 
 // Logger
