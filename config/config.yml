@@ -16,9 +16,10 @@ PHP: &PHP
 # | Session (needed for Flash messages or CSRF protection)             |
 # ----------------------------------------------------------------------
 
+# https://github.com/akrabat/rka-slim-session-middleware/blob/master/RKA/SessionMiddleware.php
 Session: &Session
     enable                      : false
-    name                        : 'Slim3'
+    name                        : 'Slim3Skeleton'
     lifetime                    : 0
     path                        : '/'
     domain                      : ''
