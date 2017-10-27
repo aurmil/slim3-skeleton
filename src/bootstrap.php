@@ -25,13 +25,13 @@ $config = require 'config.php';
 
 // ========== PHP (from configuration) ==========
 
-// time zone
-date_default_timezone_set($config['PHP']['default_timezone']);
-
 // errors
 ini_set('display_errors', $config['PHP']['display_errors']);
 ini_set('display_startup_errors', $config['PHP']['display_startup_errors']);
 ini_set('log_errors', $config['PHP']['log_errors']);
+
+// time zone
+date_default_timezone_set($config['PHP']['default_timezone']);
 
 unset($config['PHP']);
 
