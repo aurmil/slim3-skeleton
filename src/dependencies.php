@@ -22,9 +22,9 @@ $container['mailer'] = function ($container) {
         && is_array($config[$config['transport_type']])
         && count($config[$config['transport_type']])
     ) {
-        foreach ($config[$config['transport_type']] as $k => $v) {
-            $methodName = 'set' . str_replace('_', '', ucwords($k, '_'));
-            $transport->{$methodName}($v);
+        foreach ($config[$config['transport_type']] as $optionKey => $optionValue) {
+            $methodName = 'set' . str_replace('_', '', ucwords($optionKey, '_'));
+            $transport->{$methodName}($optionValue);
         }
     }
 

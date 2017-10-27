@@ -43,10 +43,10 @@ if (!$config) {
         unset($slimConfig['use_router_cache']);
     }
 
-    foreach ($slimConfig as $k => $v) {
-        $camelK = str_replace('_', '', lcfirst(ucwords($k, '_')));
-        unset($slimConfig[$k]);
-        $slimConfig[$camelK] = $v;
+    foreach ($slimConfig as $optionKey => $optionValue) {
+        $camelCaseOptionKey = str_replace('_', '', lcfirst(ucwords($optionKey, '_')));
+        unset($slimConfig[$optionKey]);
+        $slimConfig[$camelCaseOptionKey] = $optionValue;
     }
 
     $config = array_merge($config, $slimConfig);
