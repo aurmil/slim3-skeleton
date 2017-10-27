@@ -53,12 +53,11 @@ if (!$config) {
 
     // Monolog
 
-    $handlerNames = ['StreamHandler', 'NativeMailerHandler'];
-
-    foreach ($handlerNames as $handlerName) {
-        $handlerConfig = $config['Monolog'][$handlerName];
-
-        if (true === $handlerConfig['enable']
+    foreach ($config['Monolog'] as $handlerName => $handlerConfig) {
+        if (strlen($handlerName) - strlen('Handler') === strpos($handlerName, 'Handler')
+            && is_array($handlerConfig)
+            && isset($handlerConfig['enable'])
+            && true === $handlerConfig['enable']
             && isset($handlerConfig['level'])
         ) {
             $level = 'Monolog\Logger::' . $handlerConfig['level'];
