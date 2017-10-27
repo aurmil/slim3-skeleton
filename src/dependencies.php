@@ -41,7 +41,7 @@ $container['mailer'] = function ($container) {
 $container['logger'] = function ($container) {
     $config = $container->settings['Monolog'];
 
-    $logger = new Monolog\Logger($config['loggerName']);
+    $logger = new Monolog\Logger($config['logger_name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
 
     $formatter = new Monolog\Formatter\LineFormatter();
@@ -52,7 +52,7 @@ $container['logger'] = function ($container) {
     if (true === $config[$handler]['enable']) {
         $handler = new Monolog\Handler\StreamHandler(
             VAR_PATH . '/log/app-' . date('Y-m') . '.log',
-            $config[$handler]['logLevel']
+            $config[$handler]['level']
         );
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);
@@ -67,7 +67,7 @@ $container['logger'] = function ($container) {
             $config[$handler]['to'],
             $config[$handler]['subject'],
             $config[$handler]['from'],
-            $config[$handler]['logLevel']
+            $config[$handler]['level']
         );
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);
@@ -86,7 +86,7 @@ $container['logger'] = function ($container) {
         $handler = new Monolog\Handler\SwiftMailerHandler(
             $container->mailer,
             $message,
-            $config[$handler]['logLevel']
+            $config[$handler]['level']
         );
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);

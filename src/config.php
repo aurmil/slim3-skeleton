@@ -59,15 +59,15 @@ if (!$config) {
         $handlerConfig = $config['Monolog'][$handlerName];
 
         if (true === $handlerConfig['enable']
-            && isset($handlerConfig['logLevel'])
+            && isset($handlerConfig['level'])
         ) {
-            $level = 'Monolog\Logger::' . $handlerConfig['logLevel'];
+            $level = 'Monolog\Logger::' . $handlerConfig['level'];
 
             if (!defined($level)) {
                 throw new Exception("$handlerName log level is incorrect.");
             }
 
-            $config['Monolog'][$handlerName]['logLevel'] = constant($level);
+            $config['Monolog'][$handlerName]['level'] = constant($level);
         }
     }
 

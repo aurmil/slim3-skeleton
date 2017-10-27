@@ -48,19 +48,19 @@ Security: &Security
 # ----------------------------------------------------------------------
 
 Monolog: &Monolog
-    loggerName                  : 'Slim3'
+    logger_name                  : 'Slim3'
     StreamHandler: &StreamHandler
         enable                  : true
-        logLevel                : DEBUG
+        level                : DEBUG
     NativeMailerHandler: &NativeMailerHandler
         enable                  : false
-        logLevel                : ERROR
+        level                : ERROR
         to                      : ''
         subject                 : 'Error'
         from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
     SwiftMailerHandler: &SwiftMailerHandler
         enable                  : false
-        logLevel                : ERROR
+        level                : ERROR
         to                      : ''
         subject                 : 'Error'
         from                    : { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
@@ -168,7 +168,7 @@ production:
         <<: *Monolog
         StreamHandler:
             <<: *StreamHandler
-            logLevel            : WARNING
+            level            : WARNING
         SwiftMailerHandler:
             <<: *SwiftMailerHandler
             enable              : true
