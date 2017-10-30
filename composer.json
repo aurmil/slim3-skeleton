@@ -32,5 +32,8 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3.3"
     }
 }
