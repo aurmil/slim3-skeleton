@@ -1,0 +1,5 @@
+StreamHandler:
+    level: WARNING
+
+SwiftMailerHandler:
+    enable: true

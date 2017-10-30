@@ -1,0 +1,11 @@
+# https://github.com/akrabat/rka-slim-session-middleware/blob/master/RKA/SessionMiddleware.php
+
+enable: false
+
+name: 'Slim3Skeleton'
+lifetime: 0
+path: '/'
+domain: ''
+secure: false
+httponly: true
+cache_limiter: 'nocache'

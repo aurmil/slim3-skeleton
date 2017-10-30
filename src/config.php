@@ -1,34 +1,66 @@
 <?php
 
-$configFilePath = ROOT_PATH . '/config/config.yml';
-
-if (!file_exists($configFilePath)
-    || !is_file($configFilePath)
-    || !is_readable($configFilePath)
-) {
-    throw new Exception('Configuration file not found.');
-}
-
 $env = getenv('ENVIRONMENT') ?: 'development';
 $configCacheFilePath = VAR_PATH . "/cache/config/$env.json";
 $config = false;
+$configDirPath = ROOT_PATH . '/config';
 
-if (file_exists($configCacheFilePath)
-    && is_file($configCacheFilePath)
-    && is_readable($configCacheFilePath)
-    && filemtime($configCacheFilePath) > filemtime($configFilePath)
-) {
-    $config = json_decode(file_get_contents($configCacheFilePath), true);
+// search config files
+
+$globalConfigFiles = glob($configDirPath . '/*.yaml');
+$globalConfigFiles = array_filter($globalConfigFiles, function($filename) {
+    return is_file($filename);
+});
+
+$envConfigFiles = glob($configDirPath . '/' . $env . '/*.yaml');
+$envConfigFiles = array_filter($envConfigFiles, function($filename) {
+    return is_file($filename);
+});
+
+$allConfigFiles = array_merge($globalConfigFiles, $envConfigFiles);
+
+if (!count($allConfigFiles)) {
+    throw new Exception('No configuration file found.');
 }
 
-if (!$config) {
-    $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents($configFilePath));
+// read cache
 
-    if (!isset($config[$env])) {
-        throw new Exception("Environment $env not found in configuration file.");
+$config = json_decode(file_get_contents($configCacheFilePath), true);
+
+// if cache found, check cache timestamp
+
+if ($config) {
+    $configFilesTimestamps = array_map(function($filePath) {
+        return filemtime($filePath);
+    }, $allConfigFiles);
+
+    if (max($configFilesTimestamps) > filemtime($configCacheFilePath)) {
+        $config = false;
+    }
+}
+
+// if cache not found or not valid, read config files and process config values
+
+if (!$config) {
+    // read config
+
+    foreach ($globalConfigFiles as $filePath) {
+        $fileName = basename($filePath, '.yaml');
+        $config[$fileName] = Symfony\Component\Yaml\Yaml::parse(
+            file_get_contents($filePath)
+        );
     }
 
-    $config = $config[$env];
+    $envConfig = [];
+
+    foreach ($envConfigFiles as $filePath) {
+        $fileName = basename($filePath, '.yaml');
+        $envConfig[$fileName] = Symfony\Component\Yaml\Yaml::parse(
+            file_get_contents($filePath)
+        );
+    }
+
+    $config = array_replace_recursive($config, $envConfig);
 
     // Slim
 
@@ -44,7 +76,9 @@ if (!$config) {
     }
 
     foreach ($slimConfig as $optionKey => $optionValue) {
-        $camelCaseOptionKey = str_replace('_', '', lcfirst(ucwords($optionKey, '_')));
+        $camelCaseOptionKey = str_replace('_', '', lcfirst(
+            ucwords($optionKey, '_')
+        ));
         unset($slimConfig[$optionKey]);
         $slimConfig[$camelCaseOptionKey] = $optionValue;
     }

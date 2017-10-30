@@ -32,11 +32,17 @@ Feel free to read the [Slim documentation about Web servers](http://www.slimfram
 
 ## Configuration
 
-Application configuration is stored in __/config/config.yml__ which is divided into 2 main parts: general settings and environment-specific settings.
+Configuration files are stored in `/config` folder. There is one YAML file per subject/package, for better readability/management.
 
-Environment settings are grouped within sections. A section = an environment. Section name = value of __ENVIRONMENT__ env variable (default = __development__).
+Other package-specific configuration files can be stored there (and then need to be handled in application code).
 
-General settings are merged with environment-specific settings. The latter ones overwrite the first ones.
+Some configuration values can change from an environment to another. Current environment name is read from `ENVIRONMENT` env variable (default = `development`). Environment-specific configuration files override values from global configuration.
+
+Simply copy-paste one existing YAML file into a folder whose name is a valid environment name. Then edit that file, remove what does not need to change and modify the values that need to be different for this environment.
+
+You can see examples in `development-example` and `production-example` folders.
+
+You can add whatever you need into `app.yaml` file as it is up to you to use new configuration values in application code.
 
 ### Access config in PHP code
 
@@ -46,7 +52,7 @@ Configuration is also available through the container in the __settings__ entry 
 
 ### Access config in Twig template
 
-Only the __app__ and __security__ sections of configuration are in the __config__ variable.
+Only the contents of __app__ and __security__ configuration files are available in the __config__ variable.
 
 ```twig
 {{ config.my_custom_setting_key }}

@@ -1,0 +1,17 @@
+# http://swiftmailer.org/docs/sending.html
+
+enable: false
+
+# smtp or sendmail
+transport_type: 'smtp'
+
+smtp:
+    auth_mode: ''
+    username: ''
+    password: ''
+    host: ''
+    port: ''
+    encryption: ''
+
+sendmail:
+    command: ''

@@ -1,0 +1,21 @@
+# https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md
+
+logger_name: 'Slim3Skeleton'
+
+StreamHandler: &StreamHandler
+    enable: true
+    level: DEBUG
+
+NativeMailerHandler: &NativeMailerHandler
+    enable: false
+    level: ERROR
+    to: ''
+    subject: 'Slim 3 Skeleton Error'
+    from: { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
+
+SwiftMailerHandler: &SwiftMailerHandler
+    enable: false
+    level: ERROR
+    to: ''
+    subject: 'Slim 3 Skeleton Error'
+    from: { 'no-reply@localhost.com': 'Slim 3 Skeleton' }

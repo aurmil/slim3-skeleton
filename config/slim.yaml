@@ -1,0 +1,4 @@
+# https://www.slimframework.com/docs/objects/application.html
+
+display_error_details: false
+use_router_cache: false

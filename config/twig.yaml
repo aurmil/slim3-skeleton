@@ -1,0 +1,6 @@
+# http://twig.sensiolabs.org/doc/api.html
+
+debug: false
+use_cache: true
+auto_reload: true
+strict_variables: true

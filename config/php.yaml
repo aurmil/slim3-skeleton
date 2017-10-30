@@ -1,0 +1,5 @@
+log_errors: true
+display_errors: false
+display_startup_errors: false
+
+default_timezone: 'Europe/Paris'
