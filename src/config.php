@@ -45,19 +45,27 @@ if (!$config) {
     // read config
 
     foreach ($globalConfigFiles as $filePath) {
-        $fileName = basename($filePath, '.yaml');
-        $config[$fileName] = Symfony\Component\Yaml\Yaml::parse(
+        $tmpConfig = Symfony\Component\Yaml\Yaml::parse(
             file_get_contents($filePath)
         );
+
+        if ($tmpConfig) {
+            $fileName = basename($filePath, '.yaml');
+            $config[$fileName] = $tmpConfig;
+        }
     }
 
     $envConfig = [];
 
     foreach ($envConfigFiles as $filePath) {
-        $fileName = basename($filePath, '.yaml');
-        $envConfig[$fileName] = Symfony\Component\Yaml\Yaml::parse(
+        $tmpConfig = Symfony\Component\Yaml\Yaml::parse(
             file_get_contents($filePath)
         );
+
+        if ($tmpConfig) {
+            $fileName = basename($filePath, '.yaml');
+            $envConfig[$fileName] = $tmpConfig;
+        }
     }
 
     $config = array_replace_recursive($config, $envConfig);
