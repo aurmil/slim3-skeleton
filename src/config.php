@@ -8,12 +8,12 @@ $configDirPath = ROOT_PATH . '/config';
 // search config files
 
 $globalConfigFiles = glob($configDirPath . '/*.yaml');
-$globalConfigFiles = array_filter($globalConfigFiles, function($filename) {
+$globalConfigFiles = array_filter($globalConfigFiles, function ($filename) {
     return is_file($filename);
 });
 
 $envConfigFiles = glob($configDirPath . '/' . $env . '/*.yaml');
-$envConfigFiles = array_filter($envConfigFiles, function($filename) {
+$envConfigFiles = array_filter($envConfigFiles, function ($filename) {
     return is_file($filename);
 });
 
@@ -30,7 +30,7 @@ $config = json_decode(file_get_contents($configCacheFilePath), true);
 // if cache found, check cache timestamp
 
 if ($config) {
-    $configFilesTimestamps = array_map(function($filePath) {
+    $configFilesTimestamps = array_map(function ($filePath) {
         return filemtime($filePath);
     }, $allConfigFiles);
 
