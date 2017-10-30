@@ -2,18 +2,18 @@
 
 logger_name: 'Slim3Skeleton'
 
-StreamHandler: &StreamHandler
+StreamHandler:
     enable: true
     level: DEBUG
 
-NativeMailerHandler: &NativeMailerHandler
+NativeMailerHandler:
     enable: false
     level: ERROR
     to: ''
     subject: 'Slim 3 Skeleton Error'
     from: { 'no-reply@localhost.com': 'Slim 3 Skeleton' }
 
-SwiftMailerHandler: &SwiftMailerHandler
+SwiftMailerHandler:
     enable: false
     level: ERROR
     to: ''
