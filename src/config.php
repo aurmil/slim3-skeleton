@@ -25,7 +25,9 @@ if (!count($allConfigFiles)) {
 
 // read cache
 
-$config = json_decode(file_get_contents($configCacheFilePath), true);
+if (file_exists($configCacheFilePath)) {
+    $config = json_decode(file_get_contents($configCacheFilePath), true);
+}
 
 // if cache found, check cache timestamp
 
