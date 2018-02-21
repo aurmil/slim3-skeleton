@@ -44,9 +44,6 @@ require 'dependencies.php';
 require 'middlewares.php';
 require 'routes.php';
 
-// Pass datas to view
-$container->view['config'] = array_merge($config['app'], $config['security']);
-
 // Error handler
 if (!$container->settings['displayErrorDetails']) {
     $container['errorHandler'] = function ($container) {

@@ -118,6 +118,13 @@ $container['view'] = function ($container) {
         $view->addExtension(new Twig_Extension_Debug());
     }
 
+    // Pass some config data to view
+
+    $view['config'] = array_merge(
+        $container->settings['app'],
+        $container->settings['security']
+    );
+
     return $view;
 };
 
