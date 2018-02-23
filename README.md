@@ -15,62 +15,39 @@
 
 Required: PHP 7 and [Composer](https://getcomposer.org/doc/00-intro.md)
 
-Run the following command, replacing __[your-project-name]__ with the name of the folder you want to create.
+Run the following command, replacing `[your-project-name]` with the name of the folder you want to create.
+
 ```sh
 composer create-project aurmil/slim3-skeleton [your-project-name]
 ```
 
-* Create a virtual host that points to your project path __/public__
-* For Apache, make sure it has __AllowOverride All__ for [Slim URL rewriting](http://www.slimframework.com/docs/start/web-servers.html)
-* Make sure __var__ folder is writable by Web server
+This skeleton includes a `.htaccess` file for Apache but [Slim supports other Web servers](https://www.slimframework.com/docs/v3/start/web-servers.html).
 
-## Web server choice
-
-This skeleton includes a __.htaccess__ file for Apache.
-
-Feel free to read the [Slim documentation about Web servers](http://www.slimframework.com/docs/start/web-servers.html).
+* Optional: create a virtual host that points to `public` folder
+* When using Apache, make sure it has `AllowOverride All` for your project path (or a parent folder) for [Slim URL rewriting](https://www.slimframework.com/docs/v3/start/web-servers.html) to work
+* Make sure `var` folder is writable by Web server
 
 ## Configuration
 
-Configuration files are stored in `/config` folder. There is one YAML file per subject/package, for better readability/management.
+Configuration files are stored in `config` folder. There is one YAML file per subject/package, for better readability/management. Other package-specific configuration files can be stored there (and then need to be handled in application code). You can also add whatever you need into `app.yaml` file as it is up to you to use new configuration values in application code.
 
-Other package-specific configuration files can be stored there (and then need to be handled in application code).
+Some configuration values can change from an environment to another. Current environment name is read from `ENVIRONMENT` env variable (default = `development`). Environment-specific configuration files override values from global configuration. Simply copy-paste one existing YAML file into a folder whose name is a valid environment name. Then edit this file and remove everything except the values you want to change for this environment. There are examples in `development-example` and `production-example` folders.
 
-Some configuration values can change from an environment to another. Current environment name is read from `ENVIRONMENT` env variable (default = `development`). Environment-specific configuration files override values from global configuration.
+Configuration is available in application through:
 
-Simply copy-paste one existing YAML file into a folder whose name is a valid environment name. Then edit that file, remove what does not need to change and modify the values that need to be different for this environment.
-
-You can see examples in `development-example` and `production-example` folders.
-
-You can add whatever you need into `app.yaml` file as it is up to you to use new configuration values in application code.
-
-### Access config in PHP code
-
-In __/src/bootstrap.php__, the whole configuration is in the __$config__ variable.
-
-Configuration is also available through the container in the __settings__ entry (so __$this->settings__ is accessible in routes/controllers).
-
-### Access config in Twig template
-
-Only the contents of __app__ and __security__ configuration files are available in the __config__ variable.
-
-```twig
-{{ config.my_custom_setting_key }}
-```
+* `$config` variable in `src/bootstrap.php`
+* Container's `settings` entry: `$container->settings` usually and `$this->settings` in controllers extending `App\Controllers\Controller`
+* `config` variable in Twig templates: `{{ config.my_custom_setting_key }}`, but it contains only `app` and `security` configuration files
 
 ## Controllers
 
-Controllers can inherit from __App\Controllers\Controller__ class.
+Controllers can inherit from `App\Controllers\Controller` class.
 
-It provides a __render()__ method and automatic access to Slim Container entries through
-
-```php
-$this->my_container_entry_name
-```
+It provides a `render()` method and automatic access to Slim Container entries through `$this->my_service_entry_name`
 
 ## Session
 
-In configuration file, you can enable or disable session usage.
+In `session.yaml` configuration file, you can enable or disable session usage.
 
 Session is required if you want to use Flash messages or CSRF protection.
 
@@ -78,9 +55,9 @@ Session is required if you want to use Flash messages or CSRF protection.
 
 If session is enabled, CSRF token is generated for each request.
 
-In configuration file, you can enable token persistence: a token is generated for each user but not for each request. Simplifies usage of Ajax but makes application vulnerable to replay attacks if you are not using HTTPS.
+In `security.yaml` configuration file, you can enable token persistence: a token is generated for each user but not for each request. Simplifies usage of Ajax but makes application vulnerable to replay attacks if you are not using HTTPS.
 
-If CSRF check fails, the request has an attribute __csrf_status__ set to false. You can check this attribute/value in routes/controllers:
+If CSRF check fails, the request has a `csrf_status` attribute set to false. You can check this attribute/value in routes/controllers:
 
 ```php
 if (false === $request->getAttribute('csrf_status')) {
@@ -127,28 +104,28 @@ To get all messages:
 
 ## Emails
 
-By configuring __SwiftMailer__ section in configuration file, you can use "mailer" entry from container as Swift_Mailer object in your code.
+In `swiftmailer.yaml` configuration file, you can enable usage of SwiftMailer and then use `mailer` entry from container as Swift_Mailer object in your code.
 
-## Application errors by email
+By configuring `SwiftMailerHandler` (+ `swiftmailer.yaml` file) or `NativeMailerHandler` in `monolog.yaml` configuration file, you can enable or disable sending email with Monolog when an error occurs.
 
-By configuring __Monolog.NativeMailerHandler__ or __SwiftMailer__ + __Monolog.SwiftMailerHandler__ section(s), you can enable or disable sending email with Monolog when an error occurs.
+## HTML meta tags
 
-## Meta tags
-
-Every __key: value__ pair you add under __app.metas__ will be output in HTML head section as a meta tag.
+Every `key: value` pair you add under `metas` in `app.yaml` configuration file will be output in HTML head section as a meta tag.
 
 ### Title
 
-Page title is a special case. Obviously, __title__ and __title_separator__ entries won't be output as meta tags like the other ones.
+Page title is a special case. Obviously, `title` and `title_separator` entries won't be output as meta tags like the other ones.
 
-A page title is formed as follows:
-* content of the __metaTitle__ block a template child could define
+A page title is compound as follows:
+* content of the `metaTitle` block a template child could define
+
 ```twig
 {% block metaTitle %}my custom page title{% endblock %}
 ```
-* if __app.metas.title__ is not empty:
-    * if __app.metas.title_separator__ is not empty: add the separator
-    * add the config title
+
+* if `app.metas.title` configuration entry is not empty:
+    * if `app.metas.title_separator` configuration entry is not empty, add the separator
+    * add `app.metas.title`
 
 ## License
 
