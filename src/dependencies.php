@@ -101,11 +101,9 @@ $container['view'] = function ($container) {
     $view = new Slim\Views\Twig($path, $config);
 
     // Instantiate and add Slim specific extension
-    $basePath = $container->request->getUri()->getBasePath();
-    $basePath = rtrim(str_ireplace('index.php', '', $basePath), '/');
     $view->addExtension(new Slim\Views\TwigExtension(
         $container->router,
-        $basePath
+        \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER))
     ));
 
     // Slim Flash Messages Twig extension is added in middlewares.php
