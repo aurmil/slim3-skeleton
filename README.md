@@ -127,6 +127,14 @@ A page title is compound as follows:
     * if `app.metas.title_separator` configuration entry is not empty, add the separator
     * add `app.metas.title`
 
+## Code quality tools
+
+Run the following commands to check your code:
+
+* [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) `vendor/bin/phpcs --standard=PSR1,PSR2,PSR12 ./src/`
+* [PHP Coding Standards Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) `vendor/bin/php-cs-fixer fix ./src/ --verbose --dry-run --diff`
+* [PHP Mess Detector](https://github.com/phpmd/phpmd) `vendor/bin/phpmd ./src/ text cleancode,codesize,controversial,design,naming,unusedcode`
+
 ## License
 
 The MIT License (MIT). Please see [License File](https://github.com/aurmil/slim3-skeleton/blob/master/LICENSE.md) for more information.

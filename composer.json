@@ -34,6 +34,9 @@
         "sort-packages": true
     },
     "require-dev": {
-        "symfony/var-dumper": "^3.3"
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "phpmd/phpmd": "@stable",
+        "squizlabs/php_codesniffer": "*",
+        "symfony/var-dumper": "^3.4"
     }
 }
