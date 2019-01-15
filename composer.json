@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
+        "ext-json": "*",
         "akrabat/rka-slim-session-middleware": "^2.0",
         "monolog/monolog": "^1.21",
         "roave/security-advisories": "dev-master",
